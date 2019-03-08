@@ -2,9 +2,20 @@
 
 Le but de ce tutoriel est de coder une blockchain depuis zéro pour en comprendre les mécanismes. Cette blockchain sera très loin d'une blockchain de production mais permettra d'illustrer les différentes mécaniques la constituant. Les notions et les problématiques seront introduites au fur et à mesure de la progression. Certaines seront *un peu* simplifiées.
 
-Le code se fait en Javascript pour permettre au plus grand nombre de réaliser ce tutoriel et parce que c'est le langage de programmation que j'utilise quotidiennement :D. L'environnement utilisé pour l'écriture de ce sujet est Node.js (https://nodejs.org/fr/) en version 11 avec npm pour gérer les dépendances mais il doit fonctionner à partir de la version 8. Je pars du principe que vous savez coder dans ce langage et utiliser git.
+Le code se fait en Javascript pour permettre au plus grand nombre de réaliser ce tutoriel et parce que c'est le langage de programmation que j'utilise quotidiennement :D. L'environnement utilisé pour l'écriture de ce sujet est Node.js (https://nodejs.org/fr/) en version 11 avec npm pour gérer les dépendances mais il doit fonctionner à partir de la version 8. 
 
 Pour écrire ce tutoriel, je me suis inspiré de la suite d'article de Kass sur Medium qui réalise une blockchain en Java : https://medium.com/programmers-blockchain/create-simple-blockchain-java-tutorial-from-scratch-6eeed3cb03fa.
+
+## Prérequis
+
+Je pars du principe que vous savez coder dans ce langage et utiliser git. Si ce n'est pas le cas, je vous invite pour le prochain TD à lire :
+
+* Javascript : https://fr.eloquentjavascript.net/ (première edition en français, anglais, allemand et polonais)
+* Git : http://rogerdudler.github.io/git-guide/index.fr.html
+
+## Installation de node
+
+https://github.com/dreimert/dia-td1#installation-de-node
 
 ## Cloner ce dépôt
 
@@ -12,10 +23,6 @@ Pour écrire ce tutoriel, je me suis inspiré de la suite d'article de Kass sur 
 git clone https://github.com/dreimert/BuildYourBlock.git
 cd BuildYourBlock
 ```
-
-## Installation de node
-
-https://github.com/dreimert/dia-td1#installation-de-node
 
 ## Objectif
 
