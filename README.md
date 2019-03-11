@@ -8,7 +8,7 @@ Pour écrire ce tutoriel, je me suis inspiré de la suite d'article de Kass sur 
 
 ## Prérequis
 
-Je pars du principe que vous savez coder dans ce langage et utiliser git. Si ce n'est pas le cas, je vous invite pour le prochain TD à lire :
+Je pars du principe que vous savez coder en Javascipt et utiliser git. Si ce n'est pas le cas, je vous invite pour le prochain TD à lire :
 
 * Javascript : https://fr.eloquentjavascript.net/ (première edition en français, anglais, allemand et polonais)
 * Git : http://rogerdudler.github.io/git-guide/index.fr.html
