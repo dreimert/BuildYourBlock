@@ -27,8 +27,8 @@ const input = new Input(unspentOutputs[0].tx, unspentOutputs[0].index);
 input.sign(PRIVATE_KEY_ALICE);
 
 // Le montant des inputs doit être équale au montant des outputs
-const output1 = new Output(/* ... */);
-const output2 = new Output(/* ... */); // Pourquoi ?
+const output1 = new Output(1000, PUBLIC_KEY_BOB);
+const output2 = new Output(4000, PUBLIC_KEY_ALICE); // Pourquoi ?
 
 const Send1000AliceToBob = new Transaction([input], [output1, output2]);
 
@@ -38,12 +38,11 @@ console.log("Send1000AliceToBob :", Send1000AliceToBob);
 // Et en ajoutant les nouveaux.
 
 unspentOutputs.splice(0,1); // supprimer le premier élément
-unspentOutputs.push(/* ... */);
-unspentOutputs.push(/* ... */);
+unspentOutputs.push({tx: Send1000AliceToBob, index: 0});
+unspentOutputs.push({tx: Send1000AliceToBob, index: 1});
 
-// Ve
 // Implémentez cette fonction.
-const maTransaction = buildSimpleTransactions(PRIVATE_KEY_ALICE, PUBLIC_KEY_BOB, 2000, unspentOutputs);
+const maTransaction = buildSimpleTransaction(PRIVATE_KEY_ALICE, PUBLIC_KEY_BOB, 2000, unspentOutputs);
 
 console.log("maTransaction :", maTransaction);
 

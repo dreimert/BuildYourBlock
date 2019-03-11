@@ -71,7 +71,9 @@ function buildSimpleTransaction(
 
   const inputs = unspentOutputsForMontant.map((unspentOutput) => {
     // transformez un unspentOutput en input
-    return new Input(/* ... */);
+    const input = new Input(/* ... */);
+    // ...
+    return input;
   });
 
   const sommeInputs = inputs.reduce((somme, input) => {
@@ -79,6 +81,8 @@ function buildSimpleTransaction(
   }, 0);
 
   const outputs = [/* ... */];
+
+  // ...
 
   return new Transaction(inputs, outputs);
 }
@@ -101,7 +105,7 @@ function calcUnspentOutputsForMontant(montant, unspentOutputs, publicKeyStringSe
     const output = unspentOutput.tx.outputs[unspentOutput.index];
 
     // Je ne sélectionne que les transactions qui m'appartiennent
-    if(output.destinataire === publicKey) {
+    if(output.destinataire === publicKeyStringSender) {
       unspentOutputsForMontant.push(unspentOutput);
       valueUnspentOutputsForMontant += output.montant;
 

@@ -32,7 +32,6 @@ On utilise le module nodejs node-rsa pour manipuler RSA.
 Vous pouvez maintenant utiliser cette bibliothèque pour :
  - Créer une clé privée,
  - Signer un texte quelconque avec
- - Vérifier avec la clé publique que la signature est valide
 
 ```Javascript
 const NodeRSA = require('node-rsa');
@@ -49,6 +48,8 @@ console.log("Signature :", signature.toString('base64')); // Signature : fqZdnTy
 const rsaPub = rsa.exportKey("public"); // rsaPub est une chaîne qui peut être diffusée publiquement. Comme j'ai la clé publique, je peux produire la clé privée.
 console.log("Clé publique : ", rsaPub)
 ```
+
+- Vérifier avec la clé publique que la signature est valide
 
 ```Javascript
 // Vérification du message
