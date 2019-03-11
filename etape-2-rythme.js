@@ -8,14 +8,14 @@ class Participant {
   }
 
   // Change le block que le participant essaie de miner.
-  generateBlock(previous) {
-    this.block = new Block(previous.id, this.name);
+  generateBlock(previous, DIFFICULTY) {
+    this.block = new Block(previous.index + 1, previous.id, DIFFICULTY, this.name);
   }
 
   // Simule le calcule d'un hash et retourne le block si valide.
-  tick(DIFFICULTY) {
+  tick() {
     for (let i = 0; i < this.puissance; i++) {
-      if (this.block.isValid(DIFFICULTY)) {
+      if (this.block.isValid()) {
         return this.block;
       } else {
         this.block.nonce++;
@@ -34,7 +34,8 @@ class Simulation {
     this.NB_BLOCK_TO_MINE = 10;
 
     // premier block de la chaîne.
-    const genesis = new Block(null, "I am groot!");
+    const genesis = new Block(0, null, this.DIFFICULTY, "I am groot!");
+    genesis.miner();
     this.blockchain = new Blockchain();
     this.blockchain.add(genesis);
 
@@ -50,7 +51,7 @@ class Simulation {
   // Annnonce aux participants qu'il y a un nouveau block
   initParticipants() {
     this.participants.forEach((p) => {
-      p.generateBlock(this.blockchain.last())
+      p.generateBlock(this.blockchain.last(), this.DIFFICULTY)
     })
   }
 
@@ -60,7 +61,7 @@ class Simulation {
       if (block) {
         return block;
       } else {
-        return p.tick(this.DIFFICULTY);
+        return p.tick();
       }
     }, false)
   }
@@ -93,7 +94,7 @@ class Simulation {
     console.log(this.blockchain);
 
     console.log(`Simulation effectué en ${durationSim} millisecondes.`);
-    console.log(`Moyenne ${durationSim/10} millisecondes par block.`);
+    console.log(`Moyenne ${durationSim/this.NB_BLOCK_TO_MINE} millisecondes par block.`);
 
     console.log(this.blockchain.chain.reduce((acc, block) => {
       acc[block.data] = 1 + (acc[block.data] || 0);

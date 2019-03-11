@@ -18,12 +18,10 @@ module.exports = class Block extends BlockTool {
   getHash() {}
 
   // Retourne un boolean qui indique si le block est valide
-  isValid(
-    DIFFICULTY // Utile à l'étape 2
-  ) {
+  isValid() {
     return true;
   }
 
   // Utile à l'étape 2
-  miner(DIFFICULTY) {}
+  miner() {}
 }

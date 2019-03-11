@@ -11,7 +11,7 @@
 Maintenant que l'on peut vérifier si un block est valide, vérifions que notre Blockchain l'est aussi. Faisons-le ! J'ai rajouté un nouveau fichier `Blockchain.js`. Dans `Blockchain.js`, écrivez la fonction `isValid`. Pour chaque block, elle doit faire deux choses : vérifier que le block est valide et que l'identifiant du block précédent correspond bien.
 
 ```Bash
-node etape-2.js
+node etape-2-valide.js
 ```
 
 Bon, vous êtes en mesure de vérifier que la chaîne est valide, bravo !
@@ -36,7 +36,12 @@ Indice : c'est une question de bruit.
 
 On rajoute du bruit tout simplement ! Pour cela, on ajoute au block un élément appelé `nonce` initialisé à 0 et incrémenté de 1 après chaque essai invalide. Cette opération de recherche d'un hash valide s'appelle le minage.
 
-Dans la class Block, ajoutez une propriété `nonce` et une fonction `miner` qui prend en paramètre le nombre de zéros qu'il faut en début d'empreinte. N'oubliez pas de modifier la fonction `getHash` pour qu'elle prenne en compte le `nonce`. Et je suis sympa, je vous donne le lien vers deux fonctions utiles en JS :
+Dans la class Block, ajoutez :
+* Un propriété difficulty qui est le nombre de zéro attendu en début d'empreinte. Il sera fournis au constructeur.
+* Une propriété `nonce` représentant le bruit pour atteindre la difficulté.
+* Une fonction `miner` qui modifie le nonce et donc l'id pour obtenir le nombre de zéros qu'il faut en début d'empreinte.
+
+N'oubliez pas de modifier la fonction `getHash` pour qu'elle prenne en compte le `nonce` et la `difficulty`. Et je suis sympa, je vous donne le lien vers deux fonctions utiles en JS :
 
 * repeat : https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/String/repeat
 * startsWith : https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/String/startsWith
@@ -45,7 +50,7 @@ Pour voir ce qui est attendu, regardez et exécutez le fichier `etape-2-miner.js
 
 Ça met un peu de temps ? Parfait ! Sinon augmentez la difficulté.
 
-###### Modifier la fonction de vérification `isValid` de `Block` en mettant en paramètre la difficulté pour qu'elle vérifie que la difficulté est bien respectée.
+###### Modifier la fonction de vérification `isValid` de `Block` pour qu'elle vérifie, en plus, que la difficulté est bien respectée.
 
 Maintenant, votre Blockchain est beaucoup plus difficile à attaquer !
 
@@ -70,6 +75,7 @@ Modifiez `etape-2-rythme.js` pour diminuer la difficulté et augmenter le nombre
 Modifiez encore `etape-2-rythme.js` pour mettre des puissances de calcul différentes aux participants.
 
 ###### Est-ce qu'il y a un changement ?
+###### Y-a-t'il corrélation entre puissance de calcul et nombre de blocks ?
 
 ## Suite
 
