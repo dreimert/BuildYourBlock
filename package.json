@@ -1,16 +1,17 @@
 {
-  "name": "tutoblockchain",
+  "name": "build-your-block",
   "version": "1.0.0",
   "description": "Tutoriel pour développer une Blockchain depuis zéro.",
   "private": true,
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "keywords": [
     "blockchain",
     "tutorial"
   ],
   "author": "Damien Reimert",
-  "license": "ISC"
+  "license": "CC BY-SA"
 }
