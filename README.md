@@ -218,7 +218,7 @@ Dans l'exemple suivant, `Transaction 0` est une transaction sans entée. On peut
     |  +-----------------------------------+ |  |   |  |                                      | |
     |  |                                   | |  +------+ tx: < Exemple: 1654823783 >          | |
     |  | montant: 5000                     +<----------+ index: 0                             | |
-    |  | destinataire: <public key Alice > | |      |  | signature: <destinataire.sign(hash)> | |
+    |  | destinataire: <public key Alice > | |      |  | signature: <Alice.sign(hash)>        | |
     |  |     ^                             | |      |  |                +                     | |
     |  +-----------------------------------+ |      |  +--------------------------------------+ |
     |        |                               |      |                   |                       |
