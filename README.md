@@ -2,7 +2,7 @@
 
 Le but de ce tutoriel est de coder une blockchain depuis zéro pour en comprendre les mécanismes. Cette blockchain sera très loin d'une blockchain de production mais permettra d'illustrer les différentes mécaniques la constituant. Les notions et les problématiques seront introduites au fur et à mesure de la progression. Certaines seront *un peu* simplifiées.
 
-Le code se fait en Javascript pour permettre au plus grand nombre de réaliser ce tutoriel et parce que c'est le langage de programmation que j'utilise quotidiennement :D. L'environnement utilisé pour l'écriture de ce sujet est Node.js (https://nodejs.org/fr/) en version 11 avec npm pour gérer les dépendances mais il doit fonctionner à partir de la version 8. 
+Le code se fait en Javascript pour permettre au plus grand nombre de réaliser ce tutoriel et parce que c'est le langage de programmation que j'utilise quotidiennement :D. L'environnement utilisé pour l'écriture de ce sujet est Node.js (https://nodejs.org/fr/) en version 11 avec npm pour gérer les dépendances mais il doit fonctionner à partir de la version 8.
 
 Pour écrire ce tutoriel, je me suis inspiré de la suite d'article de Kass sur Medium qui réalise une blockchain en Java : https://medium.com/programmers-blockchain/create-simple-blockchain-java-tutorial-from-scratch-6eeed3cb03fa.
 
@@ -38,44 +38,46 @@ Dans une blockchain, il y a block. Un block est un ensemble d'informations et qu
 
 Commençons avec une structure de block assez simple :
 
-* Un identifiant : permet d'identifier le block. Il sera généré aléatoirement.
-* Un identifiant de parent : l'identifiant du block qui précède dans la chaîne. Cela nous permet de remonter la chaîne jusqu'à son origine.
+* Un index : permet d'identifier le block et de connaitre à position dans la chaîne.
 * Des données : pour le moment, une simple chaîne de caractères.
 
-J'ai écrit le fichier `etape-1.js` suivant :
+J'ai écrit le fichier `etape-1-a.js` suivant :
 
 ```Javascript
 const Block = require("./Block");
 
-const first  = new Block(null     , "First !");
-const second = new Block(first.id , "Second :)");
-const third  = new Block(second.id, "Vous commencez à voir le principe ?");
+const first  = new Block(0, "First !");
+const second = new Block(1, "Second :)");
+const third  = new Block(2, "Vous commencez à voir le principe ?");
 
 console.log([first, second, third]);
 ```
 
 J'ai aussi commencé à écrire le fichier `Block.js` que vous devez compléter.
 
-Quand c'est fini, dans un terminal placé dans ce dossier : `node ./etape-1.js`. Vous devriez voir quelque chose comme cela :
+Quand c'est fini, dans un terminal placé dans ce dossier : `node ./etape-1-a.js`. Vous devriez voir quelque chose comme cela :
 
 ```
 [ Block<
-       id: <xxxxxx>
-       previous: null
+       index: 0
+       id: undefined
+       previous: undefined
        data: 'First !' >,
   Block<
-       id: <yyyyyy>
-       previous: <xxxxxx>
+       index: 1
+       id: undefined
+       previous: undefined
        data: 'Second :)' >,
   Block<
-       id: <zzzzzz>
-       previous: <yyyyyy>
+       index: 2
+       id: undefined
+       previous: undefined
        data: 'Vous commencez à voir le principe ?' > ]
 ```
 
 C'est bon ? Magnifique ! Vous avez une première blockchain ! Bon, par contre, elle n'est  pas fonctionnelle... Quand un block est ajouté dans la Blockchain, il n'est plus modifiable. Ici, rien ne vous empêche de modifier ce que vous voulez et vous n'avez aucun moyen de le détecter.
 
-###### Par exemple, complétez le code de `etape-1.js` en modifiant les données du troisième block.
+###### Par exemple, complétez le code de `etape-1-a.js` en modifiant les données du troisième block.
 
 ## Prenons un peu de hash
 
@@ -110,11 +112,19 @@ Une idée ?
 
 Cool !
 
-On va calculer l'empreinte du block avec cette fonction et on va utiliser cette empreinte comme identifiant du block. Si on modifie le block, son empreinte change donc son `id` change ! Mais cette `id` est utilisé dans le block suivant, ce qui modifie son empreinte. Et ainsi de suite jusqu'au dernier block de la chaîne. On va tester plus loin.
+On va calculer l'empreinte du block avec cette fonction et on va utiliser cette empreinte comme identifiant (`id`) du block. Si on modifie le block, son empreinte change donc son `id` change ! Mais cette `id` est utilisé dans le block suivant, ce qui modifie son empreinte. Et ainsi de suite jusqu'au dernier block de la chaîne. On va tester plus loin.
+
+Modifiez le fichier `Block.js` pour ajouter au block deux propriétés :
+
+* `id` : permet d'identifier le block. Il sera généré aléatoirement.
+* `previous` : l'identifiant du block qui précède dans la chaîne. Cela nous permet de remonter la chaîne jusqu'à son origine.
+
+On peut voir nos blocks comme ceci :
 
      Block 1                   Block 2                         Block 3
     +-------------------+     +-------------------------+     +-------------------------+
     |                   |     |                         |     |                         |
+    | index: 0          |     | index: 1                |     | index: 2                |
     | id: <example: 42> +<-+  | id: <example: 26>       +<-+  | id: <example: 59>       |
     | previous: null,   |  +--+ previous: <exemple: 42> |  +--+ previous: <exemple: 26> |
     | data: "First !"   |     | data: "Second :)"       |     | data: "Blabla..."       |
@@ -134,28 +144,31 @@ class Block {
 }
 ```
 
-Modifiez la `class Block` pour lui ajouter la fonction `getHash()` qui calcule l'empreinte correspondant au block. Pour calculer cette empreinte, vous devez utiliser l'identifiant du block précédent et les données contenues dans le block.
+Regardez le fichier `etape-1-b.js` et modifiez la `class Block` pour lui ajouter la fonction `getHash()` qui calcule l'empreinte correspondant au block. Pour calculer cette empreinte, vous devez utiliser l'identifiant du block précédent et les données contenues dans le block.
 
 Exemple de concaténation :
 
 ```Javascript
-const toHash = `${previous}${data}`;
+const toHash = `${index}${previous}${data}`;
 ```
 
-Vous obtenez exactement ça :
+Vous obtenez exactement ça pour `node etape-1-b.js` :
 
 ```
 [ Block<
-       id: '9b1d3da5be217ffa1622466bf7c2e5fea827c4ee7c32af170da00f89ed49356d'
+       index: 0
+       id: '9054f1b086ce32ea53a16925cbdaec4a6c49b3ed272ae4523823182cb495631b'
        previous: null
        data: 'First !' >,
   Block<
-       id: 'ffb3dad005c79eb32345f2506189368ef5556dbacd05c8b94d59907ce64bd722'
-       previous: '9b1d3da5be217ffa1622466bf7c2e5fea827c4ee7c32af170da00f89ed49356d'
+       index: 1
+       id: 'a5b9c4f6b5fb31f45b985fee3c5cc7dd0057c307a55add3e3d8a87baf04410c7'
+       previous: '9054f1b086ce32ea53a16925cbdaec4a6c49b3ed272ae4523823182cb495631b'
        data: 'Second :)' >,
   Block<
-       id: '66d623f52b392c4ddec3129a25a9e5b992d71b062aff0d838fec16cda7527dcf'
-       previous: 'ffb3dad005c79eb32345f2506189368ef5556dbacd05c8b94d59907ce64bd722'
+       index: 2
+       id: 'de3c20962e84f44919bf010747aa2b042e8684523cb710c4b8048eb445e8742d'
+       previous: 'a5b9c4f6b5fb31f45b985fee3c5cc7dd0057c307a55add3e3d8a87baf04410c7'
        data: 'Vous commencez à voir le principe ?' > ]
 ```
 
@@ -167,7 +180,9 @@ Maintenant, essayez de modifier le premier élément de la chaîne.
 
 Modifiez la fonction `isValid()` pour qu'elle vérifie que l'id du block correspond à son contenu.
 
-###### Comme précédemment, complétez le code de `etape-1.js` en modifiant les données du troisième block. Que ce passe t'il ?
+Exécutez `node etape-1-c.js` pour vérifier que tout se passe bien.
+
+###### Que ce passe t'il dans le cas de third ?
 
 ## Suite
 
@@ -175,4 +190,4 @@ Vous avez survécu ? Cool ! Passons à l'étape suivante.
 
 Aller à l'étape 2 : `git checkout etape-2`.
 
-Pour continuer à lire le sujet soit vous lisez le fichier `README.md` sur votre machine soit sur GitHub, au-dessus de la liste des fichiers, vous pouvez cliquer sur `Branch: master` et sélectionner `etape-2`.
+Pour continuer à lire le sujet soit vous lisez le fichier `README.md` sur votre machine, soit sur GitHub, au-dessus de la liste des fichiers, vous pouvez cliquer sur `Branch: master` et sélectionner `etape-2`.

@@ -1,10 +1,5 @@
 const { BlockTool } = require('./tools');
 
-// Je mets ça là ... au cas où ...
-function generateId() {
-  return Math.floor(Math.random()*1000000000);
-}
-
 // Vous n'avez pas à comprendre BlockTool.
 // Cette class vient en support du sujet.
 // Si vous avez besoin de débugguer,
@@ -12,10 +7,10 @@ function generateId() {
 module.exports = class Block extends BlockTool {
 
   // Complétez le constructeur
-  constructor(previous, data) {
+  constructor(index, data) {
     super() // Obligatoire car on hérite de BlockTool
     // Le mot clé `this` permet d'accèder aux propriétés de l'object depuis ses méthodes.
-    this.previous = previous;
+    this.index = index;
     //...
   }
 
